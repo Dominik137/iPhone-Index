@@ -12,3 +12,18 @@ db = client["iPhoneIndex"]
 collection = db["Phones"]
 
 # API routes below
+
+@app.route('/phones', methods=['GET'])
+def get_data():
+    # Retrieve data from MongoDB
+    data = list(collection.find({}))
+    
+    # Convert ObjectId to strings
+    for item in data:
+        item['_id'] = str(item['_id'])
+    
+    return jsonify(data)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
